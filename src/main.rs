@@ -1,4 +1,4 @@
-mod vec_arr_slice;
+mod theory;
 
 // examples of use at different level (can only traverse down in the hierarchy)
 use std::sync::Arc;
@@ -19,7 +19,7 @@ pub mod hello {
 
 
 fn main() {
-    println!("{}", hello_rust::square(3));
+    // println!("{}", hello_rust::square(3));
     // vec_arr_slice::main();
     // hello::greet()
 }
