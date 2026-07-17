@@ -20,7 +20,8 @@ pub mod hello {
 
 fn main() {
     // println!("{}", hello_rust::square(3));
-    // vec_arr_slice::main();
-    // hello::greet()
+    // hello::greet();
+    // theory::vec_arr_slice::main();
+    theory::hash_map_set::main();
 }
 
