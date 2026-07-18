@@ -1,2 +1,7 @@
 pub mod vec_arr_slice;
 pub mod hash_map_set;
+pub mod basic_types;
+pub mod traits_generics;
+pub mod ownership_lifetime;
+pub mod functional_programming;
+mod struct_enum;

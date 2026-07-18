@@ -22,6 +22,7 @@ fn main() {
     // println!("{}", hello_rust::square(3));
     // hello::greet();
     // theory::vec_arr_slice::main();
-    theory::hash_map_set::main();
+    // theory::hash_map_set::main();
+    theory::basic_types::main();
 }
 
