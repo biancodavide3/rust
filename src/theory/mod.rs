@@ -4,4 +4,4 @@ pub mod basic_types;
 pub mod traits_generics;
 pub mod ownership_lifetime;
 pub mod functional_programming;
-mod struct_enum;
+pub mod struct_enum;

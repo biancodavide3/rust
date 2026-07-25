@@ -23,6 +23,7 @@ fn main() {
     // hello::greet();
     // theory::vec_arr_slice::main();
     // theory::hash_map_set::main();
-    theory::basic_types::main();
+    // theory::basic_types::main();
+    theory::struct_enum::main();
 }
 
