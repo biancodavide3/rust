@@ -24,6 +24,7 @@ fn main() {
     // theory::vec_arr_slice::main();
     // theory::hash_map_set::main();
     // theory::basic_types::main();
-    theory::struct_enum::main();
+    // theory::struct_enum::main();
+    theory::ownership_borrowchecker_lifetime::main();
 }
 
