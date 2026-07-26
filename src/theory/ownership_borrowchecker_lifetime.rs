@@ -31,6 +31,7 @@ pub fn main() {
     // but not all clone traits are copy types (e.g. string)
 
     // when you are passing values to functions it's exactly like variable assignment
+    // as well as in loops, structs or anything really
     // so it all depends on the type you are passing
     let s4 = s2.clone();
     print(s4);
