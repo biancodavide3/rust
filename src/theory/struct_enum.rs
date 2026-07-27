@@ -41,13 +41,88 @@ fn enum_example() {
         Message::Move(x, y) => {
             println!("{} {}", x, y);
         }
-        _=> {}
+        _ => {}
     }
     // or with if let
     if let Message::Move(x, y) = &message {
         println!("{} {}", x, y);
     }
+
+    // option like optional in java
+    /*
+    enum Option<T> {
+        None,
+        Some(T),
+    }
+     */
+
+    let x = Some(5);
+    match x {
+        Some(value) => println!("{value}"),
+        None => println!("none"),
+    }
+
+    // with if let to just get ignore None
+
+    if let Some(value) = x {
+        println!("{value}");
+    }
+
+    let x2: Option<i32> = None;
+
+    // useful methods
+    println!("{}", x.unwrap()); // panics if None
+    println!("{}", x.expect("Expected a number")); // better error handling
+    println!("{}", x2.unwrap_or(6)); // if None you get default
+    println!("{}", x2.unwrap_or_else(|| {
+        println!("Computing default...");
+        15
+    }));
+
+    // result with success and error type
+    /*
+    enum Result<T, E> {
+        Ok(T),
+        Err(E),
+    }
+     */
+    let success: Result<i32, String> = Ok(5);
+    let error: Result<i32, String> = Err("error".to_string());
+    match success {
+        Ok(result) => println!("{}", result),
+        Err(error) => println!("{}", error),
+    }
+
+    // ? operator
+    // we propagated the error up to the main function now we can either unwrap and panic in case of error
+    // or handle it with an explicit match
+    let final_result = calculate().unwrap();
+    println!("{}", final_result);
 }
+
+fn calculate() -> Result<i32, String> {
+    // without ?
+    /*
+    let value = divide(10, 2);
+    match value {
+        Ok(result) => Ok(result),
+        Err(error) => Err(error),
+    }
+     */
+    // with ? you can easily to multiple operations
+    let x = divide(10, 2)?;
+    let y = divide(25, x)?;
+    Ok(y)
+}
+
+fn divide(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        Err("Cannot divide by 0".to_string())
+    } else {
+        Ok(a/b)
+    }
+}
+
 
 struct User {
     username: String,
