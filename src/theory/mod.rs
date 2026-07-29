@@ -5,3 +5,6 @@ pub mod traits_generics;
 pub mod ownership_borrowchecker_lifetime;
 pub mod functional_programming;
 pub mod struct_enum;
+pub mod miscellaneous;
+pub mod smart_pointers;
+pub mod concurrency;

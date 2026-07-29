@@ -26,6 +26,7 @@ fn main() {
     // theory::basic_types::main();
     // theory::struct_enum::main();
     // theory::ownership_borrowchecker_lifetime::main();
-    theory::traits_generics::main();
+    // theory::traits_generics::main();
+    theory::functional_programming::main();
 }
 
