@@ -34,7 +34,7 @@ fn syntax() {
     // impl<T: Debug> Container<T> { ... }
     // combining
     // impl<T: Debug> Debug for Container<T> { ... }
-    // impl as a type parater (like interface java)
+    // impl as a type parameter (like interface java)
     fn print(value: impl std::fmt::Display) {   // anything that implements display
         println!("{value}");
     }

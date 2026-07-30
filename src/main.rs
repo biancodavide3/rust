@@ -28,6 +28,7 @@ fn main() {
     // theory::ownership_borrowchecker_lifetime::main();
     // theory::traits_generics::main();
     // theory::functional_programming::main();
-    theory::miscellaneous::main();
+    // theory::miscellaneous::main();
+    theory::smart_pointers::main();
 }
 
