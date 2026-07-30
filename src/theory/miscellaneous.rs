@@ -1,6 +1,7 @@
 pub fn main() {
     // syntax();
-    macros();
+    // macros();
+    raii();
 }
 
 fn syntax() {
@@ -136,5 +137,47 @@ fn macros() {
     // async fn main() {}
     // #[serde::Serialize]
     // struct User {}
+}
 
+struct A;
+struct B;
+impl Drop for A {
+    fn drop(&mut self) {
+        println!("Dropping A");
+    }
+}
+impl Drop for B {
+    fn drop(&mut self) {
+        println!("Dropping B");
+    }
+}
+
+fn raii() {
+    // resource acquisition is initialization
+    // the idea is
+    // when an object is created, it acquires a resource and when it is destroyed
+    // it automatically releases that resource
+    let s = "Hello".to_string(); // s acquires a resource in heap (String "Hello")
+    println!("{}", s);
+    // after s is not used anymore it is automatically released
+    // you never do it explicitly
+    // this can be manipulated with scope
+    println!("Start");
+    {
+        let s = String::from("Hello");
+        println!("{s}");
+    }
+    println!("End");
+    // every type can implement the Drop trait and automatically call drop()
+    // when ownership ends
+    // variables are dropped in reverse order of creation
+    {
+        let a = A;
+        let b = B;
+    }
+    // output is
+    // Dropping B
+    // Dropping A
+    // RAII is not limited to heap memory
+    // but can include anything from files, sockets, mutex locks, db connections and so on
 }
