@@ -30,6 +30,7 @@ fn main() {
     // theory::functional_programming::main();
     // theory::miscellaneous::main();
     // theory::smart_pointers::main();
-    theory::concurrency::fundamentals::main();
+    // theory::concurrency::fundamentals::main();
+    theory::concurrency::primitives::main();
 }
 

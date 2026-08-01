@@ -111,7 +111,7 @@ pub fn main() {
         .iter_mut()
         .for_each(|x| *x *= 2);
     println!("{:?}", numbers_mut);
-    // into_iter comsumes the collection
+    // into_iter consumes the collection
     let numbers_consumed = vec![1,2,3];
     for x in numbers_consumed.into_iter() {
         println!("{x}");
