@@ -1,12 +1,12 @@
 use std::ops::Deref;
-use std::sync::{Arc, Condvar, Mutex};
+use std::sync::{mpsc, Arc, Condvar, Mutex};
 use std::thread;
 use std::thread::JoinHandle;
 use std::time::Duration;
 
 pub fn main() {
     // thread();
-    arc_mutex_condvar();
+    // arc_mutex_condvar();
     channel();
 }
 
@@ -119,7 +119,7 @@ fn arc_mutex_condvar() {
         handles.push(
             thread::spawn(move || {
                 let mut value = counter.lock().unwrap();
-                *value += 1;
+                *value += 1;    // notice we deref the guard as it can be seen as a smart pointer
             })
         )
     }
@@ -201,6 +201,22 @@ fn arc_mutex_condvar() {
     // dereferences * the Arc first to get the tuple and then uses destructuring with &
     // to get references to the single members of the tuple elegantly
 
+    // NOTE:
+    // here we have to explicitly dereference with * (Arc is after all a smart pointers)
+    // because rust cannot auto deref a Arc<tuple>
+    // while in another example such as previous Arc<Vec<i32>>
+    // we are able to work with our Vec<i32> immediately
+    // we also have to take a reference & (tuple destructuring)
+    // because the just *worker_pair would try to move the values
+    // and that is impossible because the arc still owns them
+    // that is the important part we can even avoid using * and still make use of auto deref
+    // with
+    // let lock = &pair.0;
+    // let cvar = &pair.1;
+    // rust generally performs auto deref when
+    // calling methods numbers.len(), accessing fields person.name, passing references to functions
+    // it doesn't do so when matching patterns or tuple destructuring
+
     // while !*started {
     //     started = cvar.wait(started).unwrap();
     // }
@@ -226,5 +242,64 @@ fn arc_mutex_condvar() {
 }
 
 fn channel() {
+    // channels are the other way of having concurrency
+    // instead of sharing memory, threads send each messages containing data
+    // this is provided in rust in mpsc which stands for multiple producer single consumer
 
+    let (tx, rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        tx.send(String::from("Hello from tx")).unwrap();
+        // send returns Result<(), SendError<T>)
+        // the message goes into the channel
+        // and send takes ownership
+    });
+
+    let message = rx.recv().unwrap();
+    // recv returns Result<T, RecvError>
+    // recv sees if there is a message otherwise sleeps
+    // after the wait is over and a new message pops up it takes it from the channel
+    // there is also try_recv that immediately exits if no message is available
+    println!("{}", message);
+
+
+    // Sending multiple messages
+    let (tx, rx) = mpsc::channel();
+    thread::spawn(move || {
+        tx.send(1);
+        tx.send(2);
+        tx.send(3);
+    });
+    println!("{} {} {}", rx.recv().unwrap(), rx.recv().unwrap(), rx.recv().unwrap());
+    // order is preserved
+
+    // Sending messages from multiple threads
+    let (tx, rx) = mpsc::channel();
+    let tx2 = tx.clone();
+    thread::spawn(move || {
+        tx.send(1);
+    });
+    thread::spawn(move || {
+        tx2.send(2);
+    });
+    println!("{} {}", rx.recv().unwrap(), rx.recv().unwrap());
+    // order depends on scheduling might be 1 2 or 2 1
+
+    // we can only clone the tx as it's mpsc
+
+    // Iterating a rx
+
+    let (tx, rx) = mpsc::channel();
+    thread::spawn(move || {
+        tx.send(1);
+        tx.send(2);
+        tx.send(3);
+    });
+    for val in rx {
+        println!("{val}");
+    }
+    println!("Done");
+
+    // for loop is exited when every Sender is dropped by the worker so suppose
+    // for some reason tx is not dropped then the loop is stuck forever
 }
