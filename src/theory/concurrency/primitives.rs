@@ -92,7 +92,7 @@ fn arc_mutex_condvar() {
         let numbers = Arc::clone(&numbers);
         handles.push(
             thread::spawn(move || {
-                println!("Thread {}: {:?}", i, numbers);
+                println!("Thread {}: {:?}", i, numbers); // notice auto deref
             })
         )
     }
@@ -257,7 +257,9 @@ fn channel() {
 
     let message = rx.recv().unwrap();
     // recv returns Result<T, RecvError>
-    // recv sees if there is a message otherwise sleeps
+    // recv sees if there is a message otherwise sleeps ( it is blocking, so a .join()
+    // call is not always necessary unless you want for the thread to finish entirely
+    // not just wait for the data to be passed through messages )
     // after the wait is over and a new message pops up it takes it from the channel
     // there is also try_recv that immediately exits if no message is available
     println!("{}", message);
@@ -270,6 +272,9 @@ fn channel() {
         tx.send(2);
         tx.send(3);
     });
+    // note: when this thread exists tx is dropped because of RAAI
+    // (ownership was moved into the thread by move)
+
     println!("{} {} {}", rx.recv().unwrap(), rx.recv().unwrap(), rx.recv().unwrap());
     // order is preserved
 

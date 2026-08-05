@@ -31,6 +31,7 @@ fn main() {
     // theory::miscellaneous::main();
     // theory::smart_pointers::main();
     // theory::concurrency::fundamentals::main();
-    theory::concurrency::primitives::main();
+    // theory::concurrency::primitives::main();
+    theory::concurrency::patterns::main();
 }
 
