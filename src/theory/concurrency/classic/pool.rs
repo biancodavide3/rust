@@ -2,12 +2,22 @@ use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
+// simple thread pool that just executes tasks without any other special function
+
+trait Executor {
+    fn execute<F>(&self, f: F)
+    where F: FnOnce() + 'static + Send;
+}
+
 type Job = Box<dyn FnOnce() + Send + 'static>;
 
 struct Worker {
     id: usize,
     thread: thread::JoinHandle<()>,
 }
+
+// worker creates its own thread internally and puts it on an infinite loop
+// it gets job from the channel (receiver wrapped in mutex, arc)
 
 impl Worker {
     fn new(
@@ -18,9 +28,9 @@ impl Worker {
             loop {
                 let res = receiver
                     .lock()
-                    .unwrap()
+                    .unwrap()   // auto deref
                     .recv();
-                match res {
+                match res { // match here instead to exit cleanly when there is no more jobs
                     Ok(job) => {
                         println!("Worker {id} executing job");
                         job();
@@ -32,7 +42,7 @@ impl Worker {
 
         Worker {
             id,
-            thread
+            thread  // return join handle of internal thread for manipulation
         }
     }
 }
@@ -44,8 +54,11 @@ struct ThreadPool {
 
 impl ThreadPool {
     fn new(size: usize) -> Self {
+        // create the channel with the right primitives 
         let (sender, receiver) = mpsc::channel::<Job>();
         let receiver = Arc::new(Mutex::new(receiver));
+        
+        // create the workers
         let mut workers = Vec::new();
 
         for id in 0..size {
@@ -62,10 +75,13 @@ impl ThreadPool {
             sender
         }
     }
+}
 
+impl Executor for ThreadPool {
     fn execute<F>(&self, f: F)
     where F: FnOnce() + 'static + Send
     {
+        // simply wrap the closure in our job type for dynamic dispatch and use the sender
         let job = Box::new(f);
         self.sender
             .send(job)
