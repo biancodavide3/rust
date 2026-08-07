@@ -82,3 +82,7 @@ impl<T: Send + Sync> BoundedBuffer<T> for ChannelBuffer<T> {
             .unwrap()
     }
 }
+
+pub fn main() {
+    
+}

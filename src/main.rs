@@ -33,6 +33,8 @@ fn main() {
     // theory::concurrency::fundamentals::main();
     // theory::concurrency::primitives::main();
     // theory::concurrency::patterns::main();
-    theory::concurrency::classic::pool::main();
+    // theory::concurrency::classic::pool::main();
+    // theory::concurrency::classic::bounded_buffer::main();
+    theory::concurrency::classic::dining_philosophers::main();
 }
 
