@@ -2,7 +2,6 @@ pub mod pool;
 pub mod bounded_buffer;
 pub mod readers_writers;
 pub mod dining_philosophers;
-pub mod map_reduce;
 pub mod thread_safe_cache;
 pub mod work_stealing;
 pub mod rate_limiter;
