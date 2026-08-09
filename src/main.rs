@@ -35,6 +35,7 @@ fn main() {
     // theory::concurrency::patterns::main();
     // theory::concurrency::classic::pool::main();
     // theory::concurrency::classic::bounded_buffer::main();
-    theory::concurrency::classic::dining_philosophers::main();
+    // theory::concurrency::classic::dining_philosophers::main();
+    theory::concurrency::classic::actor::main();
 }
 
