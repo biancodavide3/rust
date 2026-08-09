@@ -28,7 +28,7 @@ fn main() {
     // theory::ownership_borrowchecker_lifetime::main();
     // theory::traits_generics::main();
     // theory::functional_programming::main();
-    // theory::miscellaneous::main();
+    theory::miscellaneous::main();
     // theory::smart_pointers::main();
     // theory::concurrency::fundamentals::main();
     // theory::concurrency::primitives::main();
@@ -37,6 +37,7 @@ fn main() {
     // theory::concurrency::classic::bounded_buffer::main();
     // theory::concurrency::classic::dining_philosophers::main();
     // theory::concurrency::classic::actor::main();
-    theory::concurrency::classic::rate_limiter::main();
+    // theory::concurrency::classic::rate_limiter::main();
+    // theory::concurrency::classic::thread_safe_cache::main();
 }
 

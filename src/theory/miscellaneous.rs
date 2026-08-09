@@ -1,7 +1,7 @@
 pub fn main() {
-    // syntax();
+    syntax();
     // macros();
-    raii();
+    // raii();
 }
 
 fn syntax() {
@@ -117,7 +117,7 @@ fn macros() {
     println!("{:?}", zeros);
     let formatted: String = format!("{}", "hello format");
     println!("{:?}", formatted);
-    // panic!("error) // stops the program immediately
+    // panic!("error") // stops the program immediately
     assert!(5 > 2); // checks condition
     let result = 3 + 2;
     assert_eq!(result, 5);
