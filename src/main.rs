@@ -1,4 +1,5 @@
 mod theory;
+mod exams;
 
 // examples of use at different level (can only traverse down in the hierarchy)
 use std::sync::Arc;
@@ -28,7 +29,7 @@ fn main() {
     // theory::ownership_borrowchecker_lifetime::main();
     // theory::traits_generics::main();
     // theory::functional_programming::main();
-    theory::miscellaneous::main();
+    // theory::miscellaneous::main();
     // theory::smart_pointers::main();
     // theory::concurrency::fundamentals::main();
     // theory::concurrency::primitives::main();
@@ -39,5 +40,6 @@ fn main() {
     // theory::concurrency::classic::actor::main();
     // theory::concurrency::classic::rate_limiter::main();
     // theory::concurrency::classic::thread_safe_cache::main();
+    
 }
 
