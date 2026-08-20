@@ -1,0 +1,18 @@
+Molti servizi reali non aprono una nuova connessione ogni volta che ne hanno bisogno: l'apertura è lenta e
+onerosa. Mantengono invece un insieme fisso di connessioni già pronte in un pool; chi deve lavorare ne
+preleva una, la usa e la restituisce, affinché torni disponibile per qualcun altro. È lo schema dei connection
+pool usati in molti contesti, come i database o i servizi web.
+
+Si scriva in Rust una struttura che implementi il tratto generico ResourcePool<T: Send>, che gestisce un
+insieme fisso di elementi riutilizzabili di tipo T e li concede in prestito esclusivo ai thread che ne fanno
+richiesta. Questi elementi devono essere racchiusi da un tipo che implementi il tratto generico Resource<T:
+Send>, che permette di accedere al valore dell'elemento concesso in prestito e che li restituisce al pool quando
+il valore esce dallo scope utilizzando il concetto di RAII (tramite il tratto Drop).
+
+La struttura deve essere thread-safe e condivisibile tra più thread.
+
+Ogni elemento deve essere concesso ad al più un thread alla volta: quando l'oggetto che implementa il
+tratto Resource<T> viene distrutto, il valore di tipo T (con il proprio stato) presente al suo interno torna nel
+pool, diventando disponibile per un'ulteriore richiesta.
+
+Nessuna attesa attiva (niente busy-waiting).
