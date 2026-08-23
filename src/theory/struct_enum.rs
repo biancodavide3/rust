@@ -78,6 +78,9 @@ fn enum_example() {
         println!("Computing default...");
         15
     }));
+    let mut x3 = Some(20);
+    let x4 = x3.take();
+    println!("x3 value was taken and now is: {:?}, and it is now in {:?}", x3, x4);
 
     // result with success and error type
     /*
